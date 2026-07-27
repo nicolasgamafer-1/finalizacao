@@ -1,0 +1,7 @@
+nicolas: ola
+nicolas: ola
+nicolas: bom dia
+Marcelo: tudo certo
+nicolas: ola
+Marcelo: bom dia
+ADM: receitas novas no catalogo

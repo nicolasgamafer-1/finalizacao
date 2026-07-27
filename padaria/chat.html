@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Croissant</title>
+<link rel="icon" type="image/png" href="icone.jfif">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1 class="titulo-site">PADARIA</h1>
+<p class="chat-voltar"><a href="index.html">&larr; voltar para as receitas</a></p>
+
+<div class="chat-caixa">
+  <div class="chat-cabecalho">Chat de receitas</div>
+
+  <div class="chat-mensagens" id="chat-mensagens">
+    <p class="chat-vazio">Compartilhe suas receitas aqui!!!</p>
+  </div>
+
+  <form class="chat-form" id="chat-form">
+    <input type="text" id="chat-nome" class="chat-input-nome" placeholder="Seu nome" maxlength="30" required>
+    <div class="chat-linha-mensagem">
+      <input type="text" id="chat-mensagem" class="chat-input-mensagem" placeholder="Escreva uma mensagem..." maxlength="500" required>
+      <button type="submit" class="chat-botao-enviar">Enviar</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const caixaMensagens = document.getElementById('chat-mensagens');
+  const form = document.getElementById('chat-form');
+  const campoNome = document.getElementById('chat-nome');
+  const campoMensagem = document.getElementById('chat-mensagem');
+
+  // Lembra o nome digitado da ultima vez
+  campoNome.value = localStorage.getItem('chat-nome-padaria') || '';
+
+  let ultimoConteudo = '';
+
+  function renderizarMensagens(texto) {
+    if (texto === ultimoConteudo) return; // nada mudou
+    ultimoConteudo = texto;
+
+    const linhas = texto.split('\n').filter(l => l.trim().length > 0);
+
+    if (linhas.length === 0) {
+      caixaMensagens.innerHTML = '<p class="chat-vazio">Nenhuma mensagem ainda. Seja o primeiro a escrever!</p>';
+      return;
+    }
+
+    caixaMensagens.innerHTML = linhas.map(linha => {
+      const separador = linha.indexOf(':');
+      const nome = separador > -1 ? linha.slice(0, separador) : 'Anonimo';
+      const mensagem = separador > -1 ? linha.slice(separador + 1).trim() : linha;
+      return `<div class="chat-msg">
+                <span class="chat-msg-nome">${escaparHtml(nome)}</span>
+                <span class="chat-msg-texto">${escaparHtml(mensagem)}</span>
+              </div>`;
+    }).join('');
+
+    caixaMensagens.scrollTop = caixaMensagens.scrollHeight;
+  }
+
+  function escaparHtml(texto) {
+    const div = document.createElement('div');
+    div.textContent = texto;
+    return div.innerHTML;
+  }
+
+  async function buscarMensagens() {
+    try {
+      const resposta = await fetch('/api/mensagens');
+      const texto = await resposta.text();
+      renderizarMensagens(texto);
+    } catch (erro) {
+      console.error('Nao foi possivel falar com o servidor:', erro);
+    }
+  }
+
+  form.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+    const nome = campoNome.value.trim();
+    const mensagem = campoMensagem.value.trim();
+    if (!mensagem) return;
+
+    localStorage.setItem('chat-nome-padaria', nome);
+
+    await fetch('/api/enviar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `nome=${encodeURIComponent(nome)}&mensagem=${encodeURIComponent(mensagem)}`
+    });
+
+    campoMensagem.value = '';
+    buscarMensagens();
+  });
+
+  buscarMensagens();
+  setInterval(buscarMensagens, 2000); // verifica o arquivo compartilhado a cada 2s
+</script>
+
+</body>
+</html>
