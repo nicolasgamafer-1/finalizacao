@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Croissant</title>
+<link rel="icon" type="image/png" href="icone.jfif">
+<link rel="stylesheet" href="styles.css">
+<script src="login.js" defer></script>
+</head>
+  
+<h1 class="titulo-site">RECEITAS</h1>
+<div id="status-login" class="status-login"></div>
+
+<body>
+
+
+<p class="chat-voltar"><a href="chat.html">&larr; ir para chat de receitas</a></p>
+
+<div class="nova-receita-area">
+  <button id="botao-mostrar-form" class="botao-nova-receita" onclick="abrirFormNovaReceitaOuLogin()">+ Adicionar nova receita</button>
+
+  <form id="form-nova-receita" class="form-nova-receita" style="display:none;">
+    <h3>Nova receita</h3>
+
+    <label for="campo-nome-receita">Nome da receita</label>
+    <input type="text" id="campo-nome-receita" placeholder="Ex: Pão de mel" maxlength="80" required>
+
+    <label for="campo-foto-receita">Link da foto (opcional)</label>
+    <input type="text" id="campo-foto-receita" placeholder="https://... (pode deixar em branco)">
+
+    <label for="campo-ingredientes-receita">Ingredientes (um por linha)</label>
+    <textarea id="campo-ingredientes-receita" rows="5" placeholder="2 xícaras de farinha&#10;1 xícara de açúcar&#10;..." required></textarea>
+
+    <label for="campo-preparo-receita">Modo de preparo (um passo por linha)</label>
+    <textarea id="campo-preparo-receita" rows="6" placeholder="Misture os secos&#10;Adicione os líquidos&#10;..." required></textarea>
+
+    <div class="form-nova-receita-botoes">
+      <button type="submit" class="botao-salvar-receita">Salvar receita</button>
+      <button type="button" class="botao-cancelar-receita" onclick="alternarFormNovaReceita()">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+<div class="lista-receitas" id="lista-receitas">
+
+  <div class="receita-card">
+    <div class="foto-receita"><img src="pao-de-queijo.jfif" alt="pao-de-queijo"></div>
+    <div class="nome-receita">Pão de queijo</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>Ingredientes</h3>
+      <hr>
+      <ul>
+       <li>1 xícara de chá de polvilho doce (250 g)</li>
+        <li>Meia xícara de chá de leite (120 ml)</li>
+        <li>1/4 de xícara de chá de óleo (60 ml)</li>
+        <li>Meia colher de chá de sal (ou a gosto)</li>
+        <li>1 ovo</li>
+        <li>1 xícara de chá de queijo ralado (mussarela, parmesão ou meia-cura</li>
+        </ul>
+        <h3>Modo de Preparo</h3>
+        <hr>
+        Esquentar o líquido: Em uma panela pequena, coloque o leite, o óleo e o sal. Deixe ferver.Escaldar o polvilho: Coloque o polvilho doce em uma tigela. Despeje o líquido fervente por cima do polvilho e mexa bem.Esfriar e misturar: Espere a mistura amornar. Acrescente o ovo e o queijo ralado.Modelar: Misture tudo com as mãos até formar uma massa unida. Unte as mãos com um pouco de óleo e faça pequenas bolinhas.Assar: Coloque as bolinhas em uma assadeira untada. Leve ao forno pré-aquecido a 200°C por cerca de 20 minutos, até dourarem
+    </div>
+  </div>
+
+  <div class="receita-card">
+    <div class="foto-receita"><img src="broa-de-milho.jfif" alt="broa-de-milho"></div>
+    <div class="nome-receita">Broa de milho</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>Ingredientes</h3>
+<hr>
+<ul>
+  <li>1 e 1/2 xícara de chá de fubá (200 g)</li>
+  <li>1 xícara de chá de farinha de trigo (130 g)</li>
+  <li>1 xícara de chá de açúcar (180 g)</li>
+  <li>Meia xícara de chá de leite (120 ml)</li>
+  <li>1/4 de xícara de chá de óleo (60 ml)</li>
+  <li>2 ovos</li>
+  <li>1 colher de sopa de fermento em pó</li>
+  <li>1 pitada de sal</li>
+  <li>100 g de goiabada cortada em cubos pequenos</li>
+</ul>
+
+<h3>Modo de Preparo</h3>
+<hr>
+<p><b>Misturar os secos:</b> Em uma tigela, adicione o fubá, a farinha de trigo, o açúcar, a pitada de sal e o fermento. Misture bem.</p>
+<p><b>Adicionar os líquidos:</b> Junte os ovos, o óleo e o leite aos ingredientes secos. Mexa com uma colher ou fouet até obter uma massa homogênea.</p>
+<p><b>Modelar:</b> Unte as mãos com um pouco de óleo ou farinha e faça pequenas bolinhas com a massa. Acomode-as em uma assadeira untada e enfarinhada, deixando um espaço entre elas.</p>
+<p><b>Colocar a goiabada:</b> Passe os cubos de goiabada em um pouco de farinha de trigo (para não derreterem totalmente) e pressione um cubo no centro de cada broa.</p>
+<p><b>Assar:</b> Leve ao forno pré-aquecido a 180°C por aproximadamente 25 a 30 minutos, até que a base esteja levemente dourada.</p>
+    </div>
+  </div>
+
+  <div class="receita-card">
+    <div class="foto-receita"><img src="pao.jpg" alt="pao"></div>
+    <div class="nome-receita">Pão de forma</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>Ingredientes</h3>
+<hr>
+      <ul>
+    <li>3 xícaras de farinha de trigo (aproximadamente)</li>
+    <li>1 colher de sopa cheia de fermento biológico instantâneo (10 g)</li>
+    <li>3 colheres de sopa de manteiga em temperatura ambiente</li>
+    <li>2 colheres de sopa rasas de açúcar</li>
+    <li>2 ovos batidos ligeiramente</li>
+    <li>1 colherinha de sal</li>
+    <li>½ xícara de água em temperatura ambiente</li>
+    <li>100 g de manteiga em temperatura ambiente (para folhar)</li>
+    <li>1 colher de sopa de farinha de trigo (para folhar)</li>
+    <li>1 ovo batido para pincelar</li>
+    <h3>Modo de Preparo</h3>
+<hr>
+<p><b>1. Preparar a massa:</b> Em uma tigela, misture a farinha de trigo, o fermento biológico instantâneo, o açúcar e o sal. Adicione as 3 colheres de sopa de manteiga, os 2 ovos batidos e a água aos poucos. Amasse bem até obter uma massa lisa e homogênea.</p>
+
+<p><b>2. Primeira fermentação:</b> Cubra a massa com um pano limpo ou plástico filme e deixe descansar por cerca de 30 minutos, ou até dobrar de volume.</p>
+
+<p><b>3. Preparar a mistura para folhar:</b> Em uma tigelinha, misture os 100 g de manteiga em temperatura ambiente com a 1 colher de sopa de farinha de trigo até formar uma pastinha uniforme.</p>
+
+<p><b>4. Folhar a massa:</b> Abra a massa descansada com o auxílio de um rolo em uma superfície enfarinhada até formar um retângulo. Espalhe a mistura de manteiga com farinha por toda a superfície da massa. Dobre a massa em três partes (como uma carta) e abra novamente com o rolo. Repita a dobra para criar as camadas folhadas.</p>
+
+<p><b>5. Modelar:</b> Abra a massa na espessura desejada e corte no formato preferido (como croissants ou pãezinhos folhados). Acomode as peças em uma assadeira untada e enfarinhada.</p>
+
+<p><b>6. Segunda fermentação:</b> Deixe os pães descansarem na assadeira por mais 20 a 30 minutos para crescerem novamente.</p>
+
+<p><b>7. Pincelar e assar:</b> Pincele a superfície com o ovo batido. Leve ao forno pré-aquecido a 180°C por cerca de 25 a 30 minutos, até que fiquem bem dourados e assados.</p>
+</ul>
+    </div>
+  </div>
+
+  <div class="receita-card">
+    <div class="foto-receita"><img src="bolo-de-chocolate.jfif" alt="bolo-de-chocolate"></div>
+    <div class="nome-receita">Bolo de chocolate</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>Ingredientes</h3>
+<hr>
+<ul>
+  <li>2 xícaras de chá de farinha de trigo</li>
+  <li>1 e 1/2 xícara de chá de açúcar</li>
+  <li>1 xícara de chá de chocolate em pó ou cacau em pó</li>
+  <li>1 xícara de chá de óleo</li>
+  <li>1 xícara de chá de água morna</li>
+  <li>3 ovos</li>
+  <li>1 colher de sopa de fermento em pó</li>
+  <li>1 pitada de sal</li>
+</ul>
+
+<h3>Modo de Preparo</h3>
+<hr>
+<p><b>1. Misturar os secos:</b> Em uma tigela grande, peneire a farinha de trigo, o açúcar, o chocolate em pó e a pitada de sal. Misture bem.</p>
+
+<p><b>2. Adicionar os líquidos:</b> Acrescente os ovos, o óleo e a água morna. Misture delicadamente com um fouet ou colher até obter uma massa lisa e homogênea.</p>
+
+<p><b>3. Adicionar o fermento:</b> Por último, junte o fermento em pó e misture suavemente apenas para incorporar à massa.</p>
+
+<p><b>4. Despejar na fôrma:</b> Transfira a massa para uma fôrma untada e enfarinhada (ou polvilhada com chocolate em pó).</p>
+
+<p><b>5. Assar:</b> Leve ao forno pré-aquecido a 180°C por cerca de 35 a 40 minutos. Faça o teste do palito: espete um palito no centro do bolo; se sair limpo, está pronto.</p>
+    </div>
+  </div>
+
+  <div class="receita-card">
+    <div class="foto-receita"><img src="pao-frances.jpg" alt="pao-frances"></div>
+    <div class="nome-receita">Pão francês</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>Ingredientes</h3>
+<hr>
+<ul>
+  <li>4 xícaras de chá de farinha de trigo (cerca de 500 g)</li>
+  <li>1 e 1/4 xícara de chá de água morna ou em temperatura ambiente (300 ml)</li>
+  <li>1 colher de sopa de fermento biológico seco (10 g) ou 30 g de fermento fresco</li>
+  <li>1 colher de chá de sal (10 g)</li>
+  <li>1 colher de chá de açúcar (5 g)</li>
+  <li>1 colher de sopa de manteiga ou margarina</li>
+</ul>
+
+<h3>Modo de Preparo</h3>
+<hr>
+<p><b>1. Ativar o fermento:</b> Em uma tigela, misture a água, o açúcar e o fermento biológico. Deixe descansar por cerca de 5 a 10 minutos até formar uma leve espuma.</p>
+
+<p><b>2. Preparar a massa:</b> Adicione a farinha de trigo, o sal e a manteiga à mistura de fermento. Amasse bem sobre uma bancada limpa por cerca de 10 a 15 minutos, até obter uma massa lisa, macia e elástica.</p>
+
+<p><b>3. Primeira fermentação:</b> Coloque a massa em uma tigela coberta com um pano limpo e deixe descansar em local aquecido por cerca de 1 hora, ou até dobrar de tamanho.</p>
+
+<p><b>4. Modelar os pães:</b> Divida a massa em porções iguais (cerca de 8 a 10 pedaços). Abra cada pedaço com o rolo formando um retângulo e enrole como um rocambole. Acomode os pães em uma assadeira untada ou enfarinhada.</p>
+
+<p><b>5. Segunda fermentação:</b> Cubra novamente os pães modelados e deixe crescer por mais 40 minutos.</p>
+
+<p><b>6. Fazer o corte e preparar o forno:</b> Pré-aqueça o forno a 220°C. Com uma lâmina ou faca bem afiada, faça um corte longitudinal raso no topo de cada pão. Borrife um pouco de água sobre eles ou coloque uma assadeira com água quente na grade inferior do forno para criar vapor (isso garante a casquinha crocante).</p>
+
+<p><b>7. Assar:</b> Asse por cerca de 15 a 20 minutos, até que fiquem bem dourados e crocantes.</p>
+    </div>
+  </div>
+
+  <div class="receita-card">
+    <div class="foto-receita"><img src="sonho.jpg" alt="sonho"></div>
+    <div class="nome-receita">Sonho</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>Ingredientes</h3>
+<hr>
+<ul>
+  <li>4 xícaras de chá de farinha de trigo (cerca de 500 g)</li>
+  <li>1 pacote de fermento biológico seco (10 g)</li>
+  <li>1 xícara de chá de leite morno (240 ml)</li>
+  <li>3 colheres de sopa de açúcar</li>
+  <li>2 colheres de sopa de manteiga em temperatura ambiente</li>
+  <li>2 gemas</li>
+  <li>1 pitada de sal</li>
+  <li>Óleo para fritar</li>
+  <li>Açúcar refinado ou de confeiteiro e canela em pó para polvilhar</li>
+</ul>
+
+<h3>Modo de Preparo</h3>
+<hr>
+<p><b>1. Preparar a massa:</b> Em uma tigela grande, misture o leite morno, o açúcar e o fermento biológico. Adicione as gemas, a manteiga e o sal. Vá acrescentando a farinha de trigo aos poucos, misturando até a massa começar a grudar menos nas mãos.</p>
+
+<p><b>2. Sovar e descansar:</b> Transfira a massa para uma bancada enfarinhada e sove por cerca de 10 minutos, até que fique bem lisa e macia. Cubra a massa com um pano e deixe descansar por 1 hora, ou até dobrar de tamanho.</p>
+
+<p><b>3. Modelar:</b> Divida a massa em porções pequenas (cerca de 12 a 15 partes) e faça bolinhas bem lisas. Acomode as bolinhas em uma assadeira enfarinhada, deixando um espaço entre elas. Cubra e deixe crescer novamente por mais 40 minutos.</p>
+
+<p><b>4. Fritar:</b> Aqueça o óleo em fogo médio-baixo (não deixe esquentar demais para não queimar por fora e ficar cru por dentro). Frite os sonhos aos poucos, virando para dourar por igual de ambos os lados.</p>
+
+<p><b>5. Finalizar:</b> Retire com uma escumadeira e escorra em papel-toalha. Enquanto ainda estiverem mornos, passe os sonhos no açúcar com canela para confeitar.</p>
+    </div>
+  </div>
+
+<div class="receita-card">
+    <div class="foto-receita"><img src="pao-caseiro.jpg" alt="pao-caseiro"></div>
+    <div class="nome-receita">Pão caseiro</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>ingredientes</h3>
+      <ul>
+    <li>265g de farinha de trigo</li>
+    <li>5 colheres de sopa de açúcar</li>
+    <li>4 colheres de chá de sal</li>
+    <li>4 colheres de sopa rasas de fermento</li>
+    <li>6 colheres de sopa de banha</li>
+    <li>4 copos de água</li>
+</ul>
+<p>Modo de preparo
+Coloque a farinha de trigo em uma bacia.
+Acrescente o fermento, o sal, o açúcar e a banha.
+Misture os ingredientes e, por último, adicione a água.
+Amasse até obter uma massa homogênea e consistente.
+Passe a massa no cilindro.
+Deixe descansar por 2 horas e 30 minutos.
+Asse em forno preaquecido a 260 °C por aproximadamente 40 minutos.
+
+Rendimento: cerca de 4 pães.</p>
+
+    </div>
+  </div>
+
+<div class="receita-card">
+    <div class="foto-receita"><img src="pizza.jpg" alt="pizza"></div>
+    <div class="nome-receita">Pizza</div>
+    <div class="linha-abrir-receita">
+      <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="modo-preparo">
+      <h3>ingredientes</h3>
+      <ul>
+    <li>500g de farinha de trigo</li>
+    <li>10g de fermento biológico seco</li>
+    <li>300ml de água morna</li>
+    <li>2 colheres de sopa de azeite</li>
+    <li>1 colher de chá de sal</li>
+    <li>200g de molho de tomate</li>
+    <li>300g de queijo muçarela ralado</li>
+    <li>Orégano a gosto</li>
+</ul>
+<h3>Modo de preparo</h3>
+
+<p>
+Misture a farinha, o fermento e o sal em uma tigela. Adicione a água morna e o azeite, misturando até formar uma massa. Sove por cerca de 10 minutos e deixe descansar por 1 hora. Abra a massa, coloque em uma forma de pizza, espalhe o molho de tomate, adicione a muçarela e o orégano. Leve ao forno preaquecido a 220°C por aproximadamente 20 minutos, ou até a massa ficar dourada.
+</p>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; se a sua receita for bem comentada no chat de receitas</p>
+  <p>ela podera evoluir para uma receita permanente.</p>
+</footer>
+
+<!-- ---------- Modal de login / criar conta (fica escondido ate ser necessario) ---------- -->
+<div id="modal-login" class="modal-login-fundo">
+  <div class="modal-login-caixa">
+    <div class="modal-login-abas">
+      <button type="button" id="aba-entrar" class="aba-ativa" onclick="alternarModoCadastro(false)">Entrar</button>
+      <button type="button" id="aba-criar" onclick="alternarModoCadastro(true)">Criar conta</button>
+    </div>
+
+    <form id="form-login" class="modal-login-form" onsubmit="enviarLogin(event)">
+      <label for="login-email">E-mail</label>
+      <input type="email" id="login-email" required>
+      <label for="login-senha">Senha</label>
+      <input type="password" id="login-senha" required>
+      <p id="login-erro" class="modal-login-erro"></p>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <form id="form-cadastro" class="modal-login-form" style="display:none;" onsubmit="enviarCadastro(event)">
+      <label for="cadastro-nome">Nome</label>
+      <input type="text" id="cadastro-nome" maxlength="80" required>
+      <label for="cadastro-email">E-mail</label>
+      <input type="email" id="cadastro-email" required>
+      <label for="cadastro-cpf">CPF</label>
+      <input type="text" id="cadastro-cpf" placeholder="000.000.000-00" maxlength="14" required>
+      <label for="cadastro-telefone">Telefone</label>
+      <input type="text" id="cadastro-telefone" placeholder="(00) 00000-0000" maxlength="15" required>
+      <label for="cadastro-senha">Senha</label>
+      <input type="password" id="cadastro-senha" required>
+      <p id="cadastro-erro" class="modal-login-erro"></p>
+      <button type="submit">Criar conta</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function alternarReceita(botao){
+    const receita = botao.closest('.receita-card');
+    receita.classList.toggle('aberta');
+  }
+
+  /* ---------- Nova receita ---------- */
+
+  const listaReceitas = document.getElementById('lista-receitas');
+  const formNovaReceita = document.getElementById('form-nova-receita');
+  const botaoMostrarForm = document.getElementById('botao-mostrar-form');
+
+  function alternarFormNovaReceita(){
+    const visivel = formNovaReceita.style.display !== 'none';
+    formNovaReceita.style.display = visivel ? 'none' : 'flex';
+    botaoMostrarForm.style.display = visivel ? 'inline-block' : 'none';
+  }
+
+  /* So deixa abrir o formulario se ja tiver uma conta logada;
+     senao, abre o modal de login/cadastro primeiro. */
+  function abrirFormNovaReceitaOuLogin(){
+    if (usuarioLogado()) {
+      alternarFormNovaReceita();
+    } else {
+      iniciarLogin(() => alternarFormNovaReceita());
+    }
+  }
+
+  function escaparHtml(texto){
+    const div = document.createElement('div');
+    div.textContent = texto;
+    return div.innerHTML;
+  }
+
+  function construirCardReceita(id, nome, foto, ingredientesStr, preparoStr, emailDono){
+    const ingredientes = ingredientesStr.split(';;').map(i => i.trim()).filter(i => i.length > 0);
+    const passos = preparoStr.split(';;').map(p => p.trim()).filter(p => p.length > 0);
+
+    const fotoHtml = foto ? `<img src="${escaparHtml(foto)}" alt="${escaparHtml(nome)}">` : '';
+    
+    const usuario = usuarioLogado();
+    const emailDonoLimpo = (emailDono || '').trim();
+    const ehDono = usuario && emailDonoLimpo && usuario.email.trim().toLowerCase() === emailDonoLimpo.toLowerCase();
+    const botaoApagarHtml = ehDono
+      ? `<button class="botao-apagar-receita" title="Apagar receita" onclick="apagarReceita('${escaparHtml(id)}', this)">
+           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             <polyline points="3 6 5 6 21 6"></polyline>
+             <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+             <path d="M10 11v6"></path><path d="M14 11v6"></path>
+             <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+           </svg>
+         </button>`
+      : '';
+
+    const card = document.createElement('div');
+    card.className = 'receita-card receita-dinamica';
+    card.dataset.receitaId = id;
+    card.innerHTML = `
+      <div class="foto-receita">${fotoHtml}</div>
+      <div class="nome-receita">${escaparHtml(nome)}</div>
+      <div class="linha-abrir-receita">
+        <button class="botao-abrir-receita" onclick="alternarReceita(this)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        ${botaoApagarHtml}
+      </div>
+      <div class="modo-preparo">
+        <h3>Ingredientes</h3>
+        <hr>
+        <ul>${ingredientes.map(i => `<li>${escaparHtml(i)}</li>`).join('')}</ul>
+        <h3>Modo de Preparo</h3>
+        <hr>
+        ${passos.map(p => `<p>${escaparHtml(p)}</p>`).join('')}
+      </div>`;
+    return card;
+  }
+
+  async function apagarReceita(id, botao){
+    const usuario = usuarioLogado();
+    if (!usuario) return;
+    if (!confirm('Tem certeza que quer apagar essa receita?')) return;
+
+    botao.disabled = true;
+
+    const resposta = await fetch('/api/apagar-receita', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `id=${encodeURIComponent(id)}&email=${encodeURIComponent(usuario.email)}`
+    });
+    const texto = await resposta.text();
+    const status = texto.split('|||')[0];
+
+    if (status === 'OK') {
+      ultimoConteudoReceitas = ''; // forca redesenhar
+      buscarReceitasDinamicas();
+    } else {
+      alert(texto.split('|||')[1] || 'Nao foi possivel apagar a receita.');
+      botao.disabled = false;
+    }
+  }
+
+  let ultimoConteudoReceitas = '';
+
+  async function buscarReceitasDinamicas(){
+    try {
+      const resposta = await fetch('/api/receitas');
+      const texto = await resposta.text();
+
+      if (texto === ultimoConteudoReceitas) return; // nada mudou, nao refaz os cards
+      ultimoConteudoReceitas = texto;
+
+      // remove as receitas dinamicas antigas antes de redesenhar
+      listaReceitas.querySelectorAll('.receita-dinamica').forEach(el => el.remove());
+
+      const linhas = texto.split(/\r?\n/).filter(l => l.trim().length > 0);
+      linhas.forEach(linha => {
+        const campos = linha.split('|||');
+        if (campos.length < 6) return; // linha corrompida ou incompleta, ignora
+        const [id, nome, foto, ingredientes, preparo, emailDono] = campos;
+        listaReceitas.appendChild(construirCardReceita(id, nome, foto, ingredientes, preparo, emailDono));
+      });
+    } catch (erro) {
+      console.error('Nao foi possivel buscar as receitas novas:', erro);
+    }
+  }
+
+  formNovaReceita.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+
+    const nome = document.getElementById('campo-nome-receita').value.trim();
+    const foto = document.getElementById('campo-foto-receita').value.trim();
+    const ingredientes = document.getElementById('campo-ingredientes-receita').value
+      .split('\n').map(l => l.trim()).filter(l => l.length > 0).join(';;');
+    const preparo = document.getElementById('campo-preparo-receita').value
+      .split('\n').map(l => l.trim()).filter(l => l.length > 0).join(';;');
+
+    if (!nome || !ingredientes || !preparo) return;
+
+    const usuario = usuarioLogado();
+    const email = usuario ? usuario.email : '';
+
+    await fetch('/api/nova-receita', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `nome=${encodeURIComponent(nome)}&foto=${encodeURIComponent(foto)}`
+          + `&ingredientes=${encodeURIComponent(ingredientes)}&preparo=${encodeURIComponent(preparo)}`
+          + `&email=${encodeURIComponent(email)}`
+    });
+
+    formNovaReceita.reset();
+    alternarFormNovaReceita();
+    ultimoConteudoReceitas = ''; // forca redesenhar mesmo se o conteudo parecer igual por acaso
+    buscarReceitasDinamicas();
+  });
+
+  buscarReceitasDinamicas();
+  setInterval(buscarReceitasDinamicas, 3000); // verifica receitas novas de outras pessoas a cada 3s
+</script>
+
+</body>
+</html>

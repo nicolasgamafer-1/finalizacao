@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Croissant</title>
+<link rel="icon" type="image/png" href="icone.jfif">
+<link rel="stylesheet" href="styles.css">
+<script src="login.js" defer></script>
+</head>
+<body>
+
+<h1 class="titulo-site">PADARIA</h1>
+<div id="status-login" class="status-login"></div>
+<p class="chat-voltar"><a href="index.html">&larr; voltar para as receitas</a></p>
+
+<div class="chat-caixa">
+  <div class="chat-cabecalho">Chat de receitas</div>
+
+  <div class="chat-mensagens" id="chat-mensagens">
+    <p class="chat-vazio">Faca login para ver e enviar mensagens.</p>
+  </div>
+
+  <form class="chat-form" id="chat-form">
+    <div class="chat-linha-mensagem">
+      <input type="text" id="chat-mensagem" class="chat-input-mensagem" placeholder="Escreva uma mensagem..." maxlength="500" required>
+      <button type="submit" class="chat-botao-enviar">Enviar</button>
+    </div>
+  </form>
+</div>
+
+<!-- ---------- Modal de login / criar conta (fica escondido ate ser necessario) ---------- -->
+<div id="modal-login" class="modal-login-fundo">
+  <div class="modal-login-caixa">
+    <div class="modal-login-abas">
+      <button type="button" id="aba-entrar" class="aba-ativa" onclick="alternarModoCadastro(false)">Entrar</button>
+      <button type="button" id="aba-criar" onclick="alternarModoCadastro(true)">Criar conta</button>
+    </div>
+
+    <form id="form-login" class="modal-login-form" onsubmit="enviarLogin(event)">
+      <label for="login-email">E-mail</label>
+      <input type="email" id="login-email" required>
+      <label for="login-senha">Senha</label>
+      <input type="password" id="login-senha" required>
+      <p id="login-erro" class="modal-login-erro"></p>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <form id="form-cadastro" class="modal-login-form" style="display:none;" onsubmit="enviarCadastro(event)">
+      <label for="cadastro-nome">Nome</label>
+      <input type="text" id="cadastro-nome" maxlength="80" required>
+      <label for="cadastro-email">E-mail</label>
+      <input type="email" id="cadastro-email" required>
+      <label for="cadastro-cpf">CPF</label>
+      <input type="text" id="cadastro-cpf" placeholder="000.000.000-00" maxlength="14" required>
+      <label for="cadastro-telefone">Telefone</label>
+      <input type="text" id="cadastro-telefone" placeholder="(00) 00000-0000" maxlength="15" required>
+      <label for="cadastro-senha">Senha</label>
+      <input type="password" id="cadastro-senha" required>
+      <p id="cadastro-erro" class="modal-login-erro"></p>
+      <button type="submit">Criar conta</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const caixaMensagens = document.getElementById('chat-mensagens');
+  const form = document.getElementById('chat-form');
+  const campoMensagem = document.getElementById('chat-mensagem');
+
+  let nomeUsuarioAtual = null;
+  let intervaloMensagens = null;
+
+  function renderizarMensagens(texto) {
+    const linhas = texto.split(/\r?\n/).filter(l => l.trim().length > 0);
+
+    if (linhas.length === 0) {
+      caixaMensagens.innerHTML = '<p class="chat-vazio">Nenhuma mensagem ainda. Seja o primeiro a escrever!</p>';
+      return;
+    }
+
+    caixaMensagens.innerHTML = linhas.map(linha => {
+      const separador = linha.indexOf(':');
+      const nome = separador > -1 ? linha.slice(0, separador) : 'Anonimo';
+      const mensagem = separador > -1 ? linha.slice(separador + 1).trim() : linha;
+      return `<div class="chat-msg">
+                <span class="chat-msg-nome">${escaparHtmlLogin(nome)}</span>
+                <span class="chat-msg-texto">${escaparHtmlLogin(mensagem)}</span>
+              </div>`;
+    }).join('');
+
+    caixaMensagens.scrollTop = caixaMensagens.scrollHeight;
+  }
+
+  let ultimoConteudo = '';
+
+  async function buscarMensagens() {
+    try {
+      const resposta = await fetch('/api/mensagens');
+      const texto = await resposta.text();
+      if (texto === ultimoConteudo) return;
+      ultimoConteudo = texto;
+      renderizarMensagens(texto);
+    } catch (erro) {
+      console.error('Nao foi possivel falar com o servidor:', erro);
+    }
+  }
+
+  form.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+    if (!nomeUsuarioAtual) return; // por seguranca, nao envia sem estar logado
+
+    const mensagem = campoMensagem.value.trim();
+    if (!mensagem) return;
+
+    await fetch('/api/enviar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `nome=${encodeURIComponent(nomeUsuarioAtual)}&mensagem=${encodeURIComponent(mensagem)}`
+    });
+
+    campoMensagem.value = '';
+    ultimoConteudo = ''; // forca redesenhar mesmo se o conteudo parecer igual
+    buscarMensagens();
+  });
+
+  /* So comeca a carregar/enviar mensagens depois que a pessoa estiver logada */
+  function iniciarChatComUsuario(usuario) {
+    nomeUsuarioAtual = usuario.nome;
+    caixaMensagens.innerHTML = '<p class="chat-vazio">Carregando mensagens...</p>';
+
+    buscarMensagens();
+    if (!intervaloMensagens) {
+      intervaloMensagens = setInterval(buscarMensagens, 2000);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    iniciarLogin(iniciarChatComUsuario);
+  });
+</script>
+
+</body>
+</html>

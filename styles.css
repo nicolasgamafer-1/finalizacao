@@ -1,0 +1,518 @@
+:root{
+  --bg: #F4F0E6;
+  --card: #F4F0E6;
+  --ink: #C8A27A;
+  --accent: #C8A27A;
+  --line: #E4DCC8;
+}
+
+*{ box-sizing: border-box; }
+
+
+body{
+  background-image:url('./fundo.jpg');
+  margin: 0;
+  color: var(--ink);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  padding: 48px 24px 80px;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 99%;
+}
+
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 21px;
+
+  }
+
+.titulo-site{
+  margin-top: -3px;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 79px;
+  margin-bottom: 40px;
+  color: #C8A27A;
+}
+
+.lista-receitas{
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 640px){
+  .lista-receitas{ grid-template-columns: 1fr; }
+}
+
+.receita-card{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.foto-receita{
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #EDE6D6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A8987A;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.foto-receita img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nome-receita{
+  padding: 12px 16px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.linha-abrir-receita{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px 10px;
+}
+
+.botao-apagar-receita{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: #B23A3A;
+  opacity: 0.65;
+  display: flex;
+  align-items: center;
+}
+
+.botao-apagar-receita:hover{
+  opacity: 1;
+}
+
+.botao-apagar-receita:disabled{
+  opacity: 0.3;
+  cursor: default;
+}
+
+.botao-abrir-receita{
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+}
+
+.botao-abrir-receita svg{
+  transition: transform 0.25s ease;
+}
+
+.receita-card.aberta .botao-abrir-receita svg{
+  transform: rotate(180deg);
+}
+
+.modo-preparo{
+  display: none;
+  padding: 0 16px 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #4A4438;
+}
+
+.receita-card.aberta .modo-preparo{
+  display: block;
+}
+
+/* ---------- Chat receias----------- */
+
+.chat-voltar{
+  text-align: center;
+  margin: -16px 0 32px;
+}
+
+.chat-voltar a{
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 23px;
+  letter-spacing: 0.5px;
+  font-family: 'Fredoka', cursive;
+}
+
+.chat-voltar a:hover{
+  text-decoration: underline;
+}
+
+.chat-caixa{
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-cabecalho{
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.chat-mensagens{
+  padding: 16px 20px;
+  height: 380px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-vazio{
+  margin: auto 0;
+  text-align: center;
+  color: #A8987A;
+  font-size: 0.9rem;
+}
+
+.chat-msg{
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 8px 12px;
+  line-height: 1.4;
+}
+
+.chat-msg-nome{
+  display: block;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.chat-msg-texto{
+  font-size: 0.95rem;
+  color: var(--ink);
+  word-wrap: break-word;
+}
+
+.chat-form{
+  border-top: 1px solid var(--line);
+  padding: 14px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-input-nome,
+.chat-input-mensagem{
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.chat-input-nome{
+  width: 40%;
+  min-width: 140px;
+}
+
+.chat-linha-mensagem{
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input-mensagem{
+  flex: 1;
+}
+
+.chat-botao-enviar{
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.chat-botao-enviar:hover{
+  opacity: 0.9;
+}
+
+@media (max-width: 640px){
+  .chat-input-nome{ width: 100%; }
+  .chat-form{ flex-direction: column; }
+}
+
+/* ---------- Nova receita ---------- */
+
+.nova-receita-area{
+  max-width: 900px;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.botao-nova-receita{
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 22px;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.botao-nova-receita:hover{
+  opacity: 0.9;
+}
+
+.form-nova-receita{
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 20px 22px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-nova-receita h3{
+  margin: 0 0 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1rem;
+}
+
+.form-nova-receita label{
+  font-size: 0.85rem;
+  color: var(--ink);
+  margin-top: 10px;
+}
+
+.form-nova-receita input,
+.form-nova-receita textarea{
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+  resize: vertical;
+}
+
+.form-nova-receita-botoes{
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.botao-salvar-receita{
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.botao-salvar-receita:hover{
+  opacity: 0.9;
+}
+
+.botao-cancelar-receita{
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.botao-cancelar-receita:hover{
+  background: var(--bg);
+}
+
+/* ---------- Status de login (canto do topo) ---------- */
+
+.status-login{
+  max-width: 900px;
+  margin: 0 auto 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  min-height: 1.2em;
+}
+
+.status-login-nome{
+  color: var(--ink);
+}
+
+.botao-sair{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.botao-sair:hover{
+  background: var(--accent);
+  color: #fff;
+}
+
+.botao-sair svg{
+  flex-shrink: 0;
+}
+
+/* ---------- Modal de login / criar conta ---------- */
+
+.modal-login-fundo{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(101, 67, 33, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-login-caixa{
+  width: 100%;
+  max-width: 380px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  padding: 26px 26px 22px;
+}
+
+.modal-login-abas{
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-login-abas button{
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0.5;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.modal-login-abas button.aba-ativa{
+  opacity: 1;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  font-weight: 700;
+}
+
+.modal-login-form{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-login-form label{
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+
+.modal-login-form input{
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.modal-login-form button[type="submit"]{
+  margin-top: 18px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.modal-login-form button[type="submit"]:hover{
+  opacity: 0.9;
+}
+
+.modal-login-erro{
+  color: #B23A3A;
+  font-size: 0.82rem;
+  min-height: 1.1em;
+  margin: 8px 0 0;
+}
